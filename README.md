@@ -1,3 +1,11 @@
+## Sertifikalar
+
+### Makine Ogrenmesi
+![Makine Ogrenmesi](Makine_Öğrenmesi_Sertifika.jpg)
+
+### Python Programlama
+![Python](Sıfırdan_İleri_Seviye_Python_Programlama_Sertifika.jpg)
+
 # Akıllı Çöp Kutusu Veri Analizi
 
 Bu proje, akıllı çöp kutularından toplanan verilerin analiz edilmesini ve konteyner doluluk oranlarının incelenmesini içermektedir.
@@ -77,15 +85,5 @@ pip install -r requirements.txt
 python smart_bin_analiz.py
 ```
 
-## Sertifikalar
-
-### Makine Ogrenmesi
-![Makine Ogrenmesi](Makine_Öğrenmesi_Sertifika.jpg)
-
-### Python Programlama
-![Python](Sıfırdan_İleri_Seviye_Python_Programlama_Sertifika.jpg)
 
 
-## Lisans
-
-Bu proje eğitim amaçlı hazırlanmıştır.
