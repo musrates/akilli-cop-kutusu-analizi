@@ -79,8 +79,11 @@ python smart_bin_analiz.py
 
 ## Sertifikalar
 
-- BTK Akademi - Makine Ogrenmesi (20.11.2025)
-- BTK Akademi - Sifirdan Ileri Seviye Python Programlama
+### Makine Ogrenmesi
+![Makine Ogrenmesi](Makine_Öğrenmesi_Sertifika.jpg)
+
+### Python Programlama
+![Python](Sıfırdan_İleri_Seviye_Python_Programlama_Sertifika.jpg)
 
 
 ## Lisans
