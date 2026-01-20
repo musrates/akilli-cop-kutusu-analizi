@@ -27,14 +27,21 @@ Akıllı çöp kutuları, atık yönetimi sistemlerinde verimliliği artırmak i
 - numpy
 - matplotlib
 - seaborn
+- scikit-learn (RandomForestClassifier, LabelEncoder, KMeans)
 
 ## Yapılan Analizler
 
-1. Pivot Tablo Analizi: Konteyner türü ve atık türü kombinasyonlarının ortalama doluluk oranları hesaplandı.
+1. **Pivot Tablo Analizi:** Konteyner türü ve atık türü kombinasyonlarının ortalama doluluk oranları hesaplandı.
 
-2. Doluluk Değişimi: FL_B - FL_A farkı hesaplanarak hangi kombinasyonların daha hızlı dolduğu belirlendi.
+2. **Doluluk Değişimi:** FL_B - FL_A farkı hesaplanarak hangi kombinasyonların daha hızlı dolduğu belirlendi.
 
-3. Korelasyon Analizi: Sayısal değişkenler arasındaki ilişkiler incelendi.
+3. **Korelasyon Analizi:** Sayısal değişkenler arasındaki ilişkiler incelendi.
+
+4. **Random Forest Sınıflandırma:** Class (Emptying/Non Emptying) tahmini için makine öğrenmesi modeli eğitildi.
+   - Label Encoding ile kategorik değişkenler sayısala çevrildi
+   - %80 eğitim, %20 test olarak veri bölündü
+
+5. **K-Means Kümeleme:** Doluluk verilerine göre çöp kutuları 3 kümeye ayrıldı.
 
 ## Sonuçlar
 
@@ -69,6 +76,12 @@ En Yüksek Doluluk Kombinasyonları:
 
 ### Pivot Tablo Isi Haritasi
 ![Heatmap](4_pivot_heatmap.png)
+
+### Random Forest Confusion Matrix
+![RF Confusion](5_rf_confusion_matrix.png)
+
+### Random Forest Feature Importance
+![RF Feature](6_rf_feature_importance.png)
 
 ## Kurulum
 

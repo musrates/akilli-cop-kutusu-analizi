@@ -2,6 +2,11 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
+from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
+from sklearn.cluster import KMeans
 
 df = pd.read_csv("Smart_Bin.csv")
 
@@ -36,21 +41,6 @@ pivot_degisim = pivot_fl_b - pivot_fl_a
 pivot_degisim = pivot_degisim.round(2)
 print("\nDoluluk Değişimi:")
 print(pivot_degisim)
-
-konteyner_ort = df.groupby('Container Type')['FL_B'].mean().sort_values(ascending=False)
-print("\nKonteyner Türü Bazında FL_B Ortalaması:")
-print(konteyner_ort.round(2))
-
-atik_ort = df.groupby('Recyclable fraction')['FL_B'].mean().sort_values(ascending=False)
-print("\nAtık Türü Bazında FL_B Ortalaması:")
-print(atik_ort.round(2))
-
-sinif_analiz = df.groupby('Class').agg({
-    'FL_B': ['mean', 'std', 'count'],
-    'FL_A': ['mean', 'std']
-}).round(2)
-print("\nSınıf Bazında Analiz:")
-print(sinif_analiz)
 
 sayisal_kolonlar = ['FL_B', 'FL_A', 'VS', 'FL_B_3', 'FL_A_3', 'FL_B_12', 'FL_A_12']
 korelasyon = df[sayisal_kolonlar].corr().round(3)
@@ -126,3 +116,120 @@ plt.savefig('4_pivot_heatmap.png', dpi=150)
 plt.show()
 
 print("\nGrafikler kaydedildi.")
+
+# ============================================
+# MAKİNE ÖĞRENMESİ - RANDOM FOREST
+# ============================================
+print("\n" + "=" * 50)
+print("MAKİNE ÖĞRENMESİ - RANDOM FOREST")
+print("=" * 50)
+
+# Label Encoding - Kategorik değişkenleri sayısala çevirme
+le_container = LabelEncoder()
+le_recyclable = LabelEncoder()
+le_class = LabelEncoder()
+
+df['Container_Encoded'] = le_container.fit_transform(df['Container Type'])
+df['Recyclable_Encoded'] = le_recyclable.fit_transform(df['Recyclable fraction'])
+df['Class_Encoded'] = le_class.fit_transform(df['Class'])
+
+print("\nLabel Encoding Sonuçları:")
+print(f"Container Type: {dict(zip(le_container.classes_, range(len(le_container.classes_))))}")
+print(f"Recyclable fraction: {dict(zip(le_recyclable.classes_, range(len(le_recyclable.classes_))))}")
+print(f"Class: {dict(zip(le_class.classes_, range(len(le_class.classes_))))}")
+
+# Özellikler ve hedef değişken
+X = df[['FL_B', 'FL_A', 'VS', 'Container_Encoded', 'Recyclable_Encoded']]
+y = df['Class_Encoded']
+
+# Train-Test Split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+print(f"\nEğitim seti boyutu: {len(X_train)}")
+print(f"Test seti boyutu: {len(X_test)}")
+
+# Random Forest Modeli
+rf_model = RandomForestClassifier(n_estimators=100, random_state=42, max_depth=10)
+rf_model.fit(X_train, y_train)
+
+# Tahmin
+y_pred = rf_model.predict(X_test)
+
+# Model Performansı
+print("\n--- RANDOM FOREST SONUÇLARI ---")
+print(f"Doğruluk (Accuracy): {accuracy_score(y_test, y_pred):.4f}")
+print("\nSınıflandırma Raporu:")
+print(classification_report(y_test, y_pred, target_names=le_class.classes_))
+
+# Confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
+            xticklabels=le_class.classes_, yticklabels=le_class.classes_)
+plt.title('Random Forest - Confusion Matrix', fontsize=14)
+plt.xlabel('Tahmin Edilen')
+plt.ylabel('Gerçek')
+plt.tight_layout()
+plt.savefig('5_rf_confusion_matrix.png', dpi=150)
+plt.show()
+
+# Feature Importance
+feature_importance = pd.DataFrame({
+    'Özellik': X.columns,
+    'Önem': rf_model.feature_importances_
+}).sort_values('Önem', ascending=False)
+
+print("\nÖzellik Önem Sıralaması:")
+print(feature_importance)
+
+plt.figure(figsize=(10, 6))
+plt.barh(feature_importance['Özellik'], feature_importance['Önem'], color='steelblue')
+plt.xlabel('Önem Derecesi')
+plt.ylabel('Özellik')
+plt.title('Random Forest - Feature Importance', fontsize=14)
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.savefig('6_rf_feature_importance.png', dpi=150)
+plt.show()
+
+# ============================================
+# K-MEANS KÜMELEME
+# ============================================
+print("\n" + "=" * 50)
+print("K-MEANS KÜMELEME ANALİZİ")
+print("=" * 50)
+
+# Kümeleme için özellikler - NaN değerleri temizle
+X_cluster = df[['FL_B', 'FL_A', 'VS']].dropna().copy()
+print(f"\nKümeleme için kullanılan kayıt sayısı: {len(X_cluster)} (NaN'lar çıkarıldı)")
+
+# K-Means Modeli (K=3)
+kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
+cluster_labels = kmeans.fit_predict(X_cluster)
+
+# Küme etiketlerini orijinal indekslerle eşleştir
+df_cluster = df.loc[X_cluster.index].copy()
+df_cluster['Cluster'] = cluster_labels
+
+print("\nKüme Merkezleri:")
+cluster_centers = pd.DataFrame(kmeans.cluster_centers_, 
+                               columns=['FL_B', 'FL_A', 'VS'],
+                               index=['Küme 0', 'Küme 1', 'Küme 2'])
+print(cluster_centers.round(2))
+
+print("\nKüme Dağılımı:")
+print(df_cluster['Cluster'].value_counts().sort_index())
+
+# Küme Bazında İstatistikler
+print("\nKüme Bazında Ortalamalar:")
+cluster_stats = df_cluster.groupby('Cluster')[['FL_B', 'FL_A', 'VS']].mean().round(2)
+print(cluster_stats)
+
+# Küme ve Sınıf İlişkisi
+print("\nKüme ve Class İlişkisi:")
+cluster_class = pd.crosstab(df_cluster['Cluster'], df_cluster['Class'])
+print(cluster_class)
+
+print("\n" + "=" * 50)
+print("TÜM ANALİZLER TAMAMLANDI")
+print("=" * 50)
