@@ -3,6 +3,10 @@
 
 
 
+
+
+
+
 ## Sertifikalar
 
 ### Makine Ogrenmesi
