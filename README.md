@@ -69,14 +69,12 @@ En Yüksek Doluluk Kombinasyonları:
 ### Konteyner Turune Gore Doluluk
 ![Konteyner](1_konteyner_doluluk.png)
 
-### Atik Turu Dagilimi
-![Atik](2_atik_doluluk.png)
+
 
 ### Sinif Bazinda Karsilastirma
 ![Sinif](3_sinif_doluluk.png)
 
-### Pivot Tablo Isi Haritasi
-![Heatmap](4_pivot_heatmap.png)
+
 
 ## Kurulum
 
