@@ -1,3 +1,8 @@
+### MUSA ADIGÜZEL
+### 22360859328
+
+
+
 ## Sertifikalar
 
 ### Makine Ogrenmesi
