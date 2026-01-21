@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.cluster import KMeans
@@ -95,6 +96,38 @@ print(f"Accuracy (Dogruluk): %{basari*100:.1f}")
 print(f"Precision (Kesinlik): %{precision*100:.1f}")
 print(f"Recall (Duyarlilik): %{recall*100:.1f}")
 print(f"F1-Score: %{f1*100:.1f}")
+
+# KNN (K-Nearest Neighbors)
+print("\n" + "="*40)
+print("KNN (K-EN YAKIN KOMSU)")
+print("="*40)
+
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train, y_train)
+
+knn_tahmin = knn.predict(X_test)
+
+print("\n--- KNN PERFORMANSI ---")
+knn_basari = accuracy_score(y_test, knn_tahmin)
+knn_precision = precision_score(y_test, knn_tahmin)
+knn_recall = recall_score(y_test, knn_tahmin)
+knn_f1 = f1_score(y_test, knn_tahmin)
+
+print(f"Accuracy (Dogruluk): %{knn_basari*100:.1f}")
+print(f"Precision (Kesinlik): %{knn_precision*100:.1f}")
+print(f"Recall (Duyarlilik): %{knn_recall*100:.1f}")
+print(f"F1-Score: %{knn_f1*100:.1f}")
+
+# Model Karsilastirma
+print("\n" + "="*40)
+print("MODEL KARSILASTIRMA")
+print("="*40)
+print(f"Random Forest Accuracy: %{basari*100:.1f}")
+print(f"KNN Accuracy: %{knn_basari*100:.1f}")
+if basari > knn_basari:
+    print("Random Forest daha iyi!")
+else:
+    print("KNN daha iyi!")
 
 # K-MEANS
 print("\n" + "="*40)
