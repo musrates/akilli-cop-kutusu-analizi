@@ -88,6 +88,4 @@ python smart_bin_analiz.py
 ![Python](Sıfırdan_İleri_Seviye_Python_Programlama_Sertifika.jpg)
 
 
-## Lisans
 
-Bu proje eğitim amaçlı hazırlanmıştır.
