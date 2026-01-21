@@ -1,20 +1,3 @@
-### MUSA ADIGÜZEL
-### 22360859328
-
-
-
-
-
-
-
-## Sertifikalar
-
-### Makine Ogrenmesi
-![Makine Ogrenmesi](Makine_Öğrenmesi_Sertifika.jpg)
-
-### Python Programlama
-![Python](Sıfırdan_İleri_Seviye_Python_Programlama_Sertifika.jpg)
-
 # Akıllı Çöp Kutusu Veri Analizi
 
 Bu proje, akıllı çöp kutularından toplanan verilerin analiz edilmesini ve konteyner doluluk oranlarının incelenmesini içermektedir.
@@ -43,8 +26,7 @@ Akıllı çöp kutuları, atık yönetimi sistemlerinde verimliliği artırmak i
 - pandas
 - numpy
 - matplotlib
-- seaborn
-- scikit-learn (RandomForestClassifier, LabelEncoder, KMeans)
+- scikit-learn (RandomForestClassifier, KNeighborsClassifier, LabelEncoder, KMeans)
 
 ## Yapılan Analizler
 
@@ -58,7 +40,11 @@ Akıllı çöp kutuları, atık yönetimi sistemlerinde verimliliği artırmak i
    - Label Encoding ile kategorik değişkenler sayısala çevrildi
    - %80 eğitim, %20 test olarak veri bölündü
 
-5. **K-Means Kümeleme:** Doluluk verilerine göre çöp kutuları 3 kümeye ayrıldı.
+5. **KNN Sınıflandırma:** K-En Yakın Komşu algoritması ile ikinci bir model eğitildi.
+   - K=5 komşu sayısı kullanıldı
+   - Random Forest ile karşılaştırma yapıldı
+
+6. **K-Means Kümeleme:** Doluluk verilerine göre çöp kutuları 3 kümeye ayrıldı.
 
 ## Sonuçlar
 
@@ -78,32 +64,30 @@ En Yüksek Doluluk Kombinasyonları:
 - Smart_Bin.csv: Veri seti
 - smart_bin_analiz.py: Python analiz kodu
 - smart_bin_analiz.ipynb: Jupyter Notebook
-- requirements.txt: Gerekli kütüphaneler
 
 ## Grafikler
 
 ### Konteyner Turune Gore Doluluk
 ![Konteyner](1_konteyner_doluluk.png)
 
-
-
 ### Sinif Bazinda Karsilastirma
 ![Sinif](3_sinif_doluluk.png)
-
-
-
-### Random Forest Confusion Matrix
-![RF Confusion](5_rf_confusion_matrix.png)
-
-### Random Forest Feature Importance
-![RF Feature](6_rf_feature_importance.png)
 
 ## Kurulum
 
 ```
-pip install -r requirements.txt
 python smart_bin_analiz.py
 ```
 
+## Sertifikalar
+
+### Makine Ogrenmesi
+![Makine Ogrenmesi](Makine_Öğrenmesi_Sertifika.jpg)
+
+### Python Programlama
+![Python](Sıfırdan_İleri_Seviye_Python_Programlama_Sertifika.jpg)
 
 
+## Lisans
+
+Bu proje eğitim amaçlı hazırlanmıştır.
