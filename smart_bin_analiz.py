@@ -7,7 +7,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score
 from sklearn.cluster import KMeans
 
 # Veriyi yukle
@@ -83,8 +83,18 @@ model.fit(X_train, y_train)
 
 # Tahmin
 tahmin = model.predict(X_test)
+
+# Model Performans Metrikleri
+print("\n--- MODEL PERFORMANSI ---")
 basari = accuracy_score(y_test, tahmin)
-print(f"Dogruluk: %{basari*100:.1f}")
+precision = precision_score(y_test, tahmin)
+recall = recall_score(y_test, tahmin)
+f1 = f1_score(y_test, tahmin)
+
+print(f"Accuracy (Dogruluk): %{basari*100:.1f}")
+print(f"Precision (Kesinlik): %{precision*100:.1f}")
+print(f"Recall (Duyarlilik): %{recall*100:.1f}")
+print(f"F1-Score: %{f1*100:.1f}")
 
 # Confusion Matrix
 cm = confusion_matrix(y_test, tahmin)
