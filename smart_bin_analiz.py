@@ -7,7 +7,7 @@ import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
-from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from sklearn.cluster import KMeans
 
 # Veriyi yukle
@@ -95,33 +95,6 @@ print(f"Accuracy (Dogruluk): %{basari*100:.1f}")
 print(f"Precision (Kesinlik): %{precision*100:.1f}")
 print(f"Recall (Duyarlilik): %{recall*100:.1f}")
 print(f"F1-Score: %{f1*100:.1f}")
-
-# Confusion Matrix
-cm = confusion_matrix(y_test, tahmin)
-plt.figure(figsize=(6, 5))
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-plt.title('Confusion Matrix')
-plt.xlabel('Tahmin')
-plt.ylabel('Gercek')
-plt.tight_layout()
-plt.savefig('5_rf_confusion_matrix.png')
-plt.show()
-
-# Feature Importance
-onem = pd.DataFrame({
-    'Ozellik': X.columns,
-    'Onem': model.feature_importances_
-}).sort_values('Onem', ascending=False)
-print("\nOzellik Onemleri:")
-print(onem)
-
-plt.figure(figsize=(8, 5))
-plt.barh(onem['Ozellik'], onem['Onem'], color='steelblue')
-plt.xlabel('Onem')
-plt.title('Feature Importance')
-plt.tight_layout()
-plt.savefig('6_rf_feature_importance.png')
-plt.show()
 
 # K-MEANS
 print("\n" + "="*40)
